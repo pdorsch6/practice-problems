@@ -12,18 +12,59 @@ void Main()
 	var f = "[])(".ToCharArray();
 	var g = "([})".ToCharArray();
 	var h = "".ToCharArray();
-	Console.WriteLine(this.IsBalanced(a));
-	Console.WriteLine(this.IsBalanced(b));
-	Console.WriteLine(this.IsBalanced(c));
-	Console.WriteLine(this.IsBalanced(d));
-	Console.WriteLine(this.IsBalanced(e));
-	Console.WriteLine(this.IsBalanced(f));
-	Console.WriteLine(this.IsBalanced(g));
-	Console.WriteLine(this.IsBalanced(h));
+	Console.WriteLine(this.IsBalancedStack(a));
+	Console.WriteLine(this.IsBalancedStack(b));
+	Console.WriteLine(this.IsBalancedStack(c));
+	Console.WriteLine(this.IsBalancedStack(d));
+	Console.WriteLine(this.IsBalancedStack(e));
+	Console.WriteLine(this.IsBalancedStack(f));
+	Console.WriteLine(this.IsBalancedStack(g));
+	Console.WriteLine(this.IsBalancedStack(h));
 }
 
 // You can define other methods, fields, classes and namespaces here
 
+
+// lets try with a stack instead -- will probably be much better
+bool IsBalancedStack(char[] delimiters) 
+{
+	var stack = new Stack<char>();
+	foreach (var d in delimiters) 
+	{
+		switch(d) 
+		{
+			case('{'):
+			case('('):
+			case('['):
+				stack.Push(d);
+				break;
+			case(')'):
+				if (stack.Any() && stack.Peek() == '(') 
+				{
+					stack.Pop();
+					break;
+				}
+				return false;
+			case('}'):
+				if (stack.Any() && stack.Peek() == '{') 
+				{
+					stack.Pop();
+					break;
+				}
+				return false;
+			case(']'):
+				if (stack.Any() && stack.Peek() == '[') 
+				{
+					stack.Pop();
+					break;
+				}
+				return false;
+		}	
+	}
+	return !stack.Any();
+}
+
+// brute force method!!
 bool IsBalanced(char[] delimiters)
 {
 	// return false if the delimiter length is odd
